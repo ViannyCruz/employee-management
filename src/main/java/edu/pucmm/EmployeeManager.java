@@ -20,7 +20,7 @@ public class EmployeeManager {
     }
 
     public void addEmployee(Employee employee) {
-        if (employees.contains(employee)) {
+        if (employeeExists(employee.getId()) || employeeInEmployeeListHasId(employees, employee.getId()) || employeInEmployeeListHasName(employees, employee.getName())) {
             throw new DuplicateEmployeeException("Duplicate employee");
         }
         if (!isSalaryValidForPosition(employee.getPosition(), employee.getSalary())) {
@@ -30,7 +30,7 @@ public class EmployeeManager {
     }
 
     public void removeEmployee(Employee employee) {
-        if (!employees.contains(employee)) {
+        if (!employeeExists(employee.getId())) {
             throw new EmployeeNotFoundException("Employee not found");
         }
         employees.remove(employee);
@@ -49,7 +49,7 @@ public class EmployeeManager {
     }
 
     public void updateEmployeeSalary(Employee employee, double newSalary) {
-        if (!employees.contains(employee)) {
+        if (!employeeExists(employee.getId())) {
             throw new EmployeeNotFoundException("Employee not found");
         }
         if (!isSalaryValidForPosition(employee.getPosition(), newSalary)) {
@@ -59,7 +59,7 @@ public class EmployeeManager {
     }
 
     public void updateEmployeePosition(Employee employee, Position newPosition) {
-        if (!employees.contains(employee)) {
+        if (!employeeExists(employee.getId())) {
             throw new EmployeeNotFoundException("Employee not found");
         }
         if (!isSalaryValidForPosition(newPosition, employee.getSalary())) {
@@ -69,6 +69,41 @@ public class EmployeeManager {
     }
 
     public boolean isSalaryValidForPosition(Position position, double salary) {
-        return salary >= position.getMinSalary() && salary <= position.getMaxSalary();
+        return salary >= position.getMinSalary() && salary <= position.getMaxSalary() && salary > 0;
     }
+
+
+
+    // No puede haber dos empleados con el mismo ID o nombre.
+    public boolean employeeInEmployeeListHasId(List<Employee> employeeList, String id) {
+        for (Employee employee : employeeList) {
+            if (employee.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean employeInEmployeeListHasName(List<Employee> employeeList, String name) {
+        for (Employee employee : employeeList) {
+            if (employee.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    // La comparación de empleados (por igualdad) debe basarse en el ID.
+    public boolean employeeExists(String id){
+        for (Employee employee : employees) {
+            if (employee.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }
