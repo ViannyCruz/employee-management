@@ -213,28 +213,27 @@ public class EmployeeManagerTest {
         assertThrows(DuplicateEmployeeException.class, () -> employeeManager.addEmployee(employee1));
     }
 
-
-
-/*
+    // El sistema debe permitir validar múltiples rangos de salario con pruebas parametrizadas.
     @ParameterizedTest
     @CsvSource({
-            "38, 19000",    // Sin bono
-            "39, 20000",    // Con bono
-            "40, 20000",    // Sin bono (justo 40 horas)
-            "45, 23750"     // Horas extra, sin bono
+            "30000, 40000",
+            "40000, 45000",
     })
-    void testCalcularSalarioSemanal_FullTime_VariosEscenarios(double horas, double esperado) {
-        double salario = servicio.calcularSalarioSemanal(empleadoFullTime, horas);
-        assertEquals(esperado, salario);
+    public void testIsSalaryValidForPosition_JuniorDeveloper(double low, double high) {
+        // Verifica que el salario esté dentro del rango de Junior Developer.
+        assertTrue(employeeManager.isSalaryValidForPosition(juniorDeveloper, low) && employeeManager.isSalaryValidForPosition(juniorDeveloper, high));
     }
-    @ParameterizedTest
-    @ValueSource(doubles = {-1, -10, -0.5})
-    void testCalcularSalarioSemanal_HorasNegativas_LanzaExcepcion(double horasNegativas) {
-        assertThrows(NominaException.class, () ->
-                servicio.calcularSalarioSemanal(empleadoFullTime, horasNegativas));
-    }
-*/
 
+
+    @ParameterizedTest
+    @CsvSource({
+            "60000, 65000",
+            "70000, 90000",
+    })
+    public void testIsSalaryValidForPosition_SeniorDeveloper(double low, double high) {
+        // Verifica que el salario esté dentro del rango de Senior Developer.
+        assertTrue(employeeManager.isSalaryValidForPosition(seniorDeveloper, low) && employeeManager.isSalaryValidForPosition(seniorDeveloper, high));
+    }
 
 
 }
