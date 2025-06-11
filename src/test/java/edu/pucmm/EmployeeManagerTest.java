@@ -142,6 +142,12 @@ public class EmployeeManagerTest {
         // TODO: Verificar la lógica de validación de salario para diferentes posiciones.
 
         // - Verificar que un salario de 40000 es válido para juniorDeveloper.
+        // - Verificar que un salario de 60000 no es válido para juniorDeveloper.
+        // - Verificar que un salario de 70000 es válido para seniorDeveloper.
+        // - Verificar que un salario de 50000 no es válido para seniorDeveloper.
+        // assertTrue(true);
+
+
         if(employeeManager.isSalaryValidForPosition(juniorDeveloper, 40000)
         && !employeeManager.isSalaryValidForPosition(juniorDeveloper, 60000)
         && employeeManager.isSalaryValidForPosition(seniorDeveloper, 70000)
@@ -153,10 +159,7 @@ public class EmployeeManagerTest {
         }
 
 
-        // - Verificar que un salario de 60000 no es válido para juniorDeveloper.
-        // - Verificar que un salario de 70000 es válido para seniorDeveloper.
-        // - Verificar que un salario de 50000 no es válido para seniorDeveloper.
-       // assertTrue(true);
+
     }
 
     @Test
@@ -189,7 +192,6 @@ public class EmployeeManagerTest {
         // - Eliminar employee1 del employeeManager.
         // - Verificar que no se lanza ninguna excepción.
        //         assertTrue(true);
-
         assertDoesNotThrow(() -> employeeManager.removeEmployee(employee1));
     }
 
@@ -199,7 +201,6 @@ public class EmployeeManagerTest {
         // - Intentar eliminar employee2 (no agregado al manager).
         // - Verificar que se lanza una EmployeeNotFoundException.
         // assertTrue(true);
-
         assertThrows(EmployeeNotFoundException.class, () -> employeeManager.removeEmployee(employee2));
 
     }
